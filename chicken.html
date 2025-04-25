@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Meats - Chicken</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            overflow-x: hidden;
+            background-color: #f8f9fa;
+        }
+        
+        .container-fluid {
+            background-color: rgb(194, 111, 138);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1030;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .fs-4 {
+            color: white;
+            font-weight: 800;
+            font-style: italic;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .nav-link {
+            color: white !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            transform: translateY(-2px);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .me-2 {
+            border-radius: 50%;
+            border: 2px solid white;
+            transition: transform 0.3s ease;
+        }
+        
+        .me-2:hover {
+            transform: rotate(15deg);
+        }
+        
+        .jumbotron {
+            background: url('https://www.healthifyme.com/blog/wp-content/uploads/2022/08/shutterstock_523702306-1.jpg') center/cover no-repeat;
+            height: 400px;
+            color: white;
+            position: relative;
+            margin-bottom: 0;
+        }
+        
+        .jumbotron::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+        }
+        
+        .jumbotron .content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .products-container {
+            padding: 20px 5px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding-bottom: 20px;
+            justify-content: center;
+        }
+        
+        .card {
+            min-width: calc(20% - 15px);
+            max-width: calc(20% - 15px);
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            flex-shrink: 0;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            transform: translateY(0);
+            opacity: 1;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            border-color: rgb(194, 111, 138);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .card {
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+        
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card:nth-child(5) { animation-delay: 0.5s; }
+        .card:nth-child(6) { animation-delay: 0.6s; }
+        .card:nth-child(7) { animation-delay: 0.7s; }
+        .card:nth-child(8) { animation-delay: 0.8s; }
+        .card:nth-child(9) { animation-delay: 0.9s; }
+        .card:nth-child(10) { animation-delay: 1.0s; }
+        
+        .card-img-top {
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover .card-img-top {
+            transform: scale(1.03);
+        }
+        
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            padding: 15px 0 0;
+        }
+        
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .card-subtitle {
+            font-size: 0.9rem;
+            color: #d9534f;
+            font-weight: 600;
+        }
+        
+        .card-text {
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            color: #555;
+            flex-grow: 1;
+        }
+        
+        .add-to-cart {
+            margin-top: auto;
+            align-self: center;
+            width: 100%;
+            max-width: 180px;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            background-color: rgb(194, 111, 138);
+            border: none;
+            border-radius: 5px;
+        }
+        
+        .add-to-cart:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .ch-1 {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            color: #333;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .ch-1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: rgb(194, 111, 138);
+        }
+        
+        .full-div {
+            padding-top: 80px;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .cart-icon-container {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .cart-icon-container:hover .cart-count {
+            transform: scale(1.2);
+        }
+        
+        /* Cart Dropdown Styles */
+        .cart-dropdown {
+            width: 350px;
+            max-width: 90vw;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .cart-items-container {
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        /* Custom scrollbar for cart */
+        .cart-items-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .cart-items-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .cart-items-container::-webkit-scrollbar-thumb {
+            background: rgb(194, 111, 138);
+            border-radius: 10px;
+        }
+
+        .cart-items-container::-webkit-scrollbar-thumb:hover {
+            background: #c82333;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .cart-item:hover {
+            background-color: #f9f9f9;
+        }
+
+        .cart-item-details {
+            flex-grow: 1;
+            min-width: 0;
+            padding-right: 10px;
+        }
+
+        .cart-item-details h6 {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+
+        .cart-item-details small {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .quantity-btn {
+            width: 25px;
+            height: 25px;
+            border: 1px solid #ccc;
+            background: #f8f9fa;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            border-radius: 3px;
+        }
+
+        .quantity-btn:hover {
+            background-color: #e9ecef;
+        }
+
+        .quantity-input {
+            width: 30px;
+            text-align: center;
+            margin: 0 3px;
+            padding: 0;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 0.85rem;
+        }
+
+        .cart-total {
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-align: right;
+            padding: 5px 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        /* Mobile Cart Button */
+        .mobile-cart-btn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1040;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: rgb(194, 111, 138);
+            color: white;
+            border: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 1200px) {
+            .card {
+                min-width: calc(25% - 15px);
+                max-width: calc(25% - 15px);
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .card {
+                min-width: calc(33.33% - 15px);
+                max-width: calc(33.33% - 15px);
+            }
+            
+            .desktop-cart {
+                display: none;
+            }
+            
+            .mobile-cart-btn {
+                display: flex;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .card {
+                min-width: calc(50% - 15px);
+                max-width: calc(50% - 15px);
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .card {
+                min-width: calc(100% - 10px);
+                max-width: calc(100% - 10px);
+            }
+            
+            .card-img-top {
+                height: 180px;
+            }
+            
+            .ch-1 {
+                font-size: 1.5rem;
+            }
+
+            .cart-dropdown {
+                width: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg container-fluid">
+        <div class="container">
+            <a href="./about.html" class="navbar-brand d-flex align-items-center">
+                <img src="https://img.freepik.com/free-vector/butcher-shop-logo-design-template_1302-31725.jpg" alt="Prime Meats Logo" width="50" height="50" class="me-2">
+                <span class="fs-4">PRIME MEATS</span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a href="./index.html" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="./features.html" class="nav-link">Features</a></li>
+
+                    <li class="nav-item dropdown">
+                        <a href="./menu.html" class="nav-link dropdown-toggle">Menu</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="./chicken.html">Chicken</a></li>
+                            <li><a class="dropdown-item" href="./seafood.html">Seafood</a></li>
+                            <li><a class="dropdown-item" href="./mutton.html">Mutton</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item"><a href="./faqs.html" class="nav-link">FAQs</a></li>
+                    <li class="nav-item"><a href="./about.html" class="nav-link">About</a></li>
+                    
+                    <li class="nav-item dropdown desktop-cart">
+                        <a class="nav-link dropdown-toggle cart-icon-container" href="#" id="desktopCartDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count">0</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end cart-dropdown" aria-labelledby="desktopCartDropdown">
+                            <li>
+                                <h6 class="dropdown-header d-flex justify-content-between align-items-center">
+                                    Your Cart Items
+                                    <button class="btn btn-sm btn-outline-secondary close-cart" aria-label="Close">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </h6>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <div class="cart-items-container">
+                                <li class="px-3 py-2 text-muted">Your cart is empty</li>
+                            </div>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <div class="cart-total">
+                                    Total: ₹<span class="cart-total-amount">0</span>
+                                </div>
+                            </li>
+                            <li><a class="dropdown-item text-center btn btn-danger text-white" href="#" id="checkout-btn">Proceed to Checkout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <button class="mobile-cart-btn" id="mobileCartButton">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count">0</span>
+    </button>
+
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cartModalLabel">Your Cart</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="cart-items-container">
+                        <div class="px-3 py-2 text-muted">Your cart is empty</div>
+                    </div>
+                    <div class="cart-total mt-3">
+                        Total: ₹<span class="cart-total-amount">0</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Continue Shopping</button>
+                    <button type="button" class="btn btn-danger" id="mobileCheckoutBtn">Proceed to Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container">
+        <div class="toast align-items-center text-white bg-success" role="alert" aria-live="assertive" aria-atomic="true" id="added-to-cart-toast">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Item added to cart successfully!
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+        
+        <div class="toast align-items-center text-white bg-danger" role="alert" aria-live="assertive" aria-atomic="true" id="removed-from-cart-toast">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Item removed from cart!
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="full-div">
+        <div class="jumbotron text-center d-flex align-items-center justify-content-center">
+            <div class="content position-relative">
+                <h1 class="display-4">Fresh & Premium Chicken</h1>
+                <p class="lead">Pure, farm-fresh chicken for a healthy meal !</p>
+                <p>We offer fresh, tender & hygienically processed chicken to enhance your cooking experience. Choose from a variety of cuts for your favorite dishes.</p>
+                <div class="d-flex flex-wrap justify-content-center gap-2">
+                    <a href="./mutton.html" class="btn btn-danger btn-lg">Shop Mutton</a>
+                    <a href="#chick" class="btn btn-danger btn-lg">Order Now</a>
+                    <a href="./seafood.html" class="btn btn-danger btn-lg">Shop Seafoods</a>
+                </div>
+            </div>
+        </div>
+        
+        <div id="chick" class="products-container">
+            <h1 class="ch-1">Fresh Chicken Cuts (Raw)</h1>
+            <div class="card-container">
+                <div class="card product-card" data-id="1" data-name="Boneless Chicken" data-price="200">
+                    <img src="https://assets.tendercuts.in/product/R/M/84ef27f1-cea0-4dab-9a30-080ebf2c3dd7.jpg" class="card-img-top" alt="Boneless Chicken">
+                    <div class="card-body">
+                        <h5 class="card-title">Boneless Chicken</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">1/2 kg - ₹200</h6>
+                        <p class="card-text">Pure Meat, No Bones, and 100% Convenience! Our boneless cuts offer tender, protein-rich goodness for effortless cooking.</p>
+                        <button class="btn btn-danger add-to-cart">Add to cart</button>
+                    </div>
+                </div>
+                <div class="card product-card" data-id="2" data-name="Whole Chicken" data-price="200">
+                    <img src="https://songfish.com.sg/wp-content/uploads/2021/10/Whole-Chicken.jpg" class="card-img-top" alt="Whole Chicken">
+                    <div class="card-body">
+                        <h5 class="card-title">Whole Chicken</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">1/2 kg - ₹200</h6>
+                        <p class="card-text">Premium quality whole chicken, perfect for roasting or traditional recipes. Fresh and hygienically processed.</p>
+                        <button class="btn btn-danger add-to-cart">Add to cart</button>
+                    </div>
+                </div>
+                <div class="card product-card" data-id="3" data-name="Chicken Wings" data-price="200">
+                    <img src="https://assets.tendercuts.in/product/C/H/ec648622-2e91-4a53-b22a-35c0900aca70.jpg" class="card-img-top" alt="Chicken Wings">
+                    <div class="card-body">
+                        <h5 class="card-title">Chicken Wings</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">1/2 kg - ₹200</h6>
+                        <p class="card-text">Juicy and flavorful wings, ideal for grilling, frying, or baking. Perfect for parties and snacks.</p>
+                        <button class="btn btn-danger add-to-cart">Add to cart</button>
+                    </div>
+                </div>
+                <div class="card product-card" data-id="4" data-name="Chicken Lollipop" data-price="200">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSb7T-pRKTrGGDAAbgl2hfkrlRos7ZKBLXAQ&s" class="card-img-top" alt="Chicken Lollipop">
+                    <div class="card-body">
+                        <h5 class="card-title">Chicken Lollipop</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">1/2 kg - ₹200</h6>
+                        <p class="card-text">Frenched chicken wings that resemble lollipops. Great for appetizers and finger food.</p>
+                        <button class="btn btn-danger add-to-cart">Add to cart</button>
+                    </div>
+                </div>
+                <div class="card product-card" data-id="5" data-name="Chicken Curry Cut" data-price="200">
+                    <img src="https://assets.tendercuts.in/product/C/H/ec648622-2e91-4a53-b22a-35c0900aca70.jpg" class="card-img-top" alt="Chicken Curry Cut">
+                    <div class="card-body">
+                        <h5 class="card-title">Chicken Curry Cut</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">1/2 kg - ₹200</h6>
+                        <p class="card-text">Perfectly cut pieces for curries and stews. Bone-in pieces for enhanced flavor.</p>
+                        <button class="btn btn-danger add-to-cart">Add to cart</button>
+                    </div>
+                </div>
+                <div class="card product-card" data-id="14" data-name="Chicken Thighs" data-price="220">
+                    <img src="https://thumbs.dreamstime.com/b/raw-free-range-boneless-skinless-chicken-thighs-thime-garlic-red-pepper-corns-sea-salt-flakes-stone-table-87582820.jpg" class="card-img-top" alt="Chicken Thighs">
+                    <div class="card-body">
+                        <h5 class="card-title">Chicken Thighs</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">1/2 kg - ₹220</h6>
+                        <p class="card-text">Juicy and flavorful chicken thighs, perfect for grilling or slow cooking.</p>
+                        <button class="btn btn-danger add-to-cart">Add to cart</button>
+                    </div>
+                </div>
+                <div class="card product-card" data-id="15" data-name="Chicken Drumsticks" data-price="210">
+                    <img src="https://media.istockphoto.com/id/654411290/photo/raw-uncooked-chicken-legs-drumsticks-on-wooden-board-meat-with-ingredients-for-cooking.jpg?s=612x612&w=0&k=20&c=VYhMXHeAM4L00xlm-XVTaV7gGZ7YtmLSJKHd75jGGm0=" class="card-img-top" alt="Chicken Drumsticks">
+                    <div class="card-body">
+                        <h5 class="card-title">Chicken Drumsticks</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">1/2 kg - ₹210</h6>
+                        <p class="card-text">Meaty chicken drumsticks, great for frying, baking or barbecuing.</p>
+                        <button class="btn btn-danger add-to-cart">Add to cart</button>
+                    </div>
+                </div>
+                <div class="card product-card" data-id="16" data-name="Chicken Breast" data-price="230">
+                    <img src="https://assets.tendercuts.in/product/C/H/594e4559-f6b7-417d-9aac-d0643b5711d3.jpg" class="card-img-top" alt="Chicken Breast">
+                    <div class="card-body">
+                        <h5 class="card-title">Chicken Breast</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">1/2 kg - ₹230</h6>
+                        <p class="card-text">Lean and tender chicken breast, ideal for healthy meals and salads.</p>
+                        <button class="btn btn-danger add-to-cart">Add to cart</button>
+                    </div>
+                </div>
+                <div class="card product-card" data-id="17" data-name="Chicken Mince" data-price="190">
+                    <img src="https://5.imimg.com/data5/SELLER/Default/2021/2/IJ/VG/ML/53446082/chicken-kheema-500x500.jpg" class="card-img-top" alt="Chicken Mince">
+                    <div class="card-body">
+                        <h5 class="card-title">Chicken Mince</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">1/2 kg - ₹190</h6>
+                        <p class="card-text">Finely ground chicken mince, perfect for burgers, meatballs and kebabs.</p>
+                        <button class="btn btn-danger add-to-cart">Add to cart</button>
+                    </div>
+                </div>
+                <div class="card product-card" data-id="18" data-name="Chicken Liver" data-price="180">
+                    <img src="https://assets.tendercuts.in/product/C/H/23c55476-401a-4b29-8fc6-a06806438abf.webp" class="card-img-top" alt="Chicken Liver">
+                    <div class="card-body">
+                        <h5 class="card-title">Chicken Liver</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">1/2 kg - ₹180</h6>
+                        <p class="card-text">Nutrient-rich chicken liver, great for frying or adding to curries.</p>
+                        <button class="btn btn-danger add-to-cart">Add to cart</button>
+                    </div>
+                </div>
+            </div>
+            
+            <h1 class="ch-1">Marinated & Ready-to-Cook Items</h1>
+            <div class="card-container">
+                <div class="card product-card" data-id="6" data-name="Tandoori Chicken" data-price="250">
+                    <img src="https://assets.tendercuts.in/product/R/M/84ef27f1-cea0-4dab-9a30-080ebf2c3dd7.jpg" class="card-img-top" alt="Tandoori Chicken">
+                    <div class="card-body">
+                        <h5 class="card-title">Tandoori Chicken</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">1/2 kg - ₹250</h6>
+                        <p class="card-text">Marinated in yogurt and spices, ready to grill or bake. Authentic tandoori flavor.</p>
+                        <button class="btn btn-danger add-to-cart">Add to cart</button>
+                    </div>
+                </div>
+                <div class="card product-card" data-id="7" data-name="Chicken Tikka" data-price="250">
+                    <img src="https://songfish.com.sg/wp-content/uploads/2021/10/Whole-Chicken.jpg" class="card-img-top" alt="Chicken Tikka">
+                    <div class="card-body">
+                        <h5 class="card-title">Chicken Tikka</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">1/2 kg - ₹250</h6>
+                        <p class="card-text">Boneless pieces marinated in traditional spices, ready to cook.</p>
+                        <button class="btn btn-danger add-to-cart">Add to cart</button>
+                    </div>
+                </div>
+                <div class="card product-card" data-id="8" data-name="Butter Chicken" data-price="250">
+                    <img src="https://assets.tendercuts.in/product/C/H/ec648622-2e91-4a53-b22a-35c0900aca70.jpg" class="card-img-top" alt="Butter Chicken">
+                    <div class="card-body">
+                        <h5 class="card-title">Butter Chicken</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">1/2 kg - ₹250</h6>
+                        <p class="card-text">Pre-marinated in rich butter chicken gravy. Just cook and serve.</p>
+                        <button class="btn btn-danger add-to-cart">Add to cart</button>
+                    </div>
+                </div>
+                <div class="card product-card" data-id="9" data-name="Chicken 65" data-price="250">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSb7T-pRKTrGGDAAbgl2hfkrlRos7ZKBLXAQ&s" class="card-img-top" alt="Chicken 65">
+                    <div class="card-body">
+                        <h5 class="card-title">Chicken 65</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">1/2 kg - ₹250</h6>
+                        <p class="card-text">Spicy, deep-fried chicken appetizer, ready to cook.</p>
+                        <button class="btn btn-danger add-to-cart">Add to cart</button>
+                    </div>
+                </div>
+                <div class="card product-card" data-id="10" data-name="Chicken Seekh Kabab" data-price="250">
+                    <img src="https://assets.tendercuts.in/product/C/H/ec648622-2e91-4a53-b22a-35c0900aca70.jpg" class="card-img-top" alt="Chicken Seekh Kabab">
+                    <div class="card-body">
+                        <h5 class="card-title">Chicken Seekh Kabab</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">1/2 kg - ₹250</h6>
+                        <p class="card-text">Minced chicken kababs with traditional spices, ready to grill.</p>
+                        <button class="btn btn-danger add-to-cart">Add to cart</button>
+                    </div>
+                </div>
+                <div class="card product-card" data-id="11" data-name="Lemon Pepper Chicken" data-price="270">
+                    <img src="https://www.thespruceeats.com/thmb/KBcO9yR3YnC_PJ7xzucljo043K4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/lemon-pepper-marinade-335279-hero-01-0294ad9eba4b4d708025d3452c78b010.jpg" class="card-img-top" alt="Lemon Pepper Chicken">
+                    <div class="card-body">
+                        <h5 class="card-title">Lemon Pepper Chicken</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">1/2 kg - ₹270</h6>
+                        <p class="card-text">Zesty lemon and cracked pepper marinated chicken, perfect for grilling or baking.</p>
+                        <button class="btn btn-danger add-to-cart">Add to cart</button>
+                    </div>
+                </div>
+                <div class="card product-card" data-id="12" data-name="Honey Garlic Chicken" data-price="280">
+                    <img src="https://i0.wp.com/chefsavvy.com/wp-content/uploads/honey-garlic-baked-chicken-thighs.jpg?resize=665%2C895&ssl=1" class="card-img-top" alt="Honey Garlic Chicken">
+                    <div class="card-body">
+                        <h5 class="card-title">Honey Garlic Chicken</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">1/2 kg - ₹280</h6>
+                        <p class="card-text">Sweet honey and garlic glazed chicken, ready to cook for a delicious meal.</p>
+                        <button class="btn btn-danger add-to-cart">Add to cart</button>
+                    </div>
+                </div>
+                <div class="card product-card" data-id="13" data-name="Peri-Peri Chicken" data-price="290">
+                    <img src="https://assets.tendercuts.in/product/M/R/21e4145a-b35d-4095-91c1-09f8322485c0.webp" class="card-img-top" alt="Peri-Peri Chicken">
+                    <div class="card-body">
+                        <h5 class="card-title">Peri-Peri Chicken</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">1/2 kg - ₹290</h6>
+                        <p class="card-text">Spicy African peri-peri marinated chicken with a flavorful kick.</p>
+                        <button class="btn btn-danger add-to-cart">Add to cart</button>
+                    </div>
+                </div>
+                <div class="card product-card" data-id="19" data-name="BBQ Chicken" data-price="260">
+                    <img src="https://fitfoodiefinds.com/wp-content/uploads/2020/08/BBQ-Chicken-Salad-05.jpg" class="card-img-top" alt="BBQ Chicken">
+                    <div class="card-body">
+                        <h5 class="card-title">BBQ Chicken</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">1/2 kg - ₹260</h6>
+                        <p class="card-text">Smoky BBQ flavored chicken, perfect for grilling or baking.</p>
+                        <button class="btn btn-danger add-to-cart">Add to cart</button>
+                    </div>
+                </div>
+                <div class="card product-card" data-id="20" data-name="Teriyaki Chicken" data-price="275">
+                    <img src="https://easychickenrecipes.com/wp-content/uploads/2021/02/featured-teriyaki-chicken-marinade-recipe.jpg" class="card-img-top" alt="Teriyaki Chicken">
+                    <div class="card-body">
+                        <h5 class="card-title">Teriyaki Chicken</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">1/2 kg - ₹275</h6>
+                        <p class="card-text">Japanese-style teriyaki marinated chicken with sweet and savory flavors.</p>
+                        <button class="btn btn-danger add-to-cart">Add to cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const addToast = new bootstrap.Toast(document.getElementById('added-to-cart-toast'));
+            const removeToast = new bootstrap.Toast(document.getElementById('removed-from-cart-toast'));
+            const cartModal = new bootstrap.Modal(document.getElementById('cartModal'));
+            let cartDropdown = null;
+            
+            setTimeout(() => {
+                cartDropdown = new bootstrap.Dropdown(document.getElementById('desktopCartDropdown'));
+            }, 100);
+            
+            function updateCartCount() {
+                const count = cart.reduce((total, item) => total + item.quantity, 0);
+                document.querySelectorAll('.cart-count').forEach(el => {
+                    el.textContent = count;
+                });
+            }
+            
+            function updateCartDropdown() {
+                const container = document.querySelectorAll('.cart-items-container');
+                const totalAmountElement = document.querySelectorAll('.cart-total-amount');
+                
+                if (cart.length === 0) {
+                    container.forEach(el => {
+                        el.innerHTML = '<div class="px-3 py-2 text-muted">Your cart is empty</div>';
+                    });
+                    totalAmountElement.forEach(el => {
+                        el.textContent = '0';
+                    });
+                    return;
+                }
+                
+                let html = '';
+                let totalAmount = 0;
+                
+                cart.forEach(item => {
+                    const itemTotal = item.price * item.quantity;
+                    totalAmount += itemTotal;
+                    
+                    html += `
+                        <div class="cart-item">
+                            <div class="cart-item-details">
+                                <h6>${item.name}</h6>
+                                <small>₹${item.price} × ${item.quantity} = ₹${itemTotal}</small>
+                            </div>
+                            <div class="cart-item-controls">
+                                <button class="quantity-btn decrease-quantity" data-id="${item.id}">-</button>
+                                <input type="text" class="quantity-input" value="${item.quantity}" readonly>
+                                <button class="quantity-btn increase-quantity" data-id="${item.id}">+</button>
+                                <button class="btn btn-sm btn-outline-danger ms-2 remove-item" data-id="${item.id}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                container.forEach(el => {
+                    el.innerHTML = html;
+                });
+                
+                totalAmountElement.forEach(el => {
+                    el.textContent = totalAmount;
+                });
+                
+                setupCartInteractions();
+            }
+            
+            function setupCartInteractions() {
+                document.querySelectorAll('.decrease-quantity').forEach(button => {
+                    button.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const id = this.getAttribute('data-id');
+                        updateQuantity(id, -1);
+                    });
+                });
+                
+                document.querySelectorAll('.increase-quantity').forEach(button => {
+                    button.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const id = this.getAttribute('data-id');
+                        updateQuantity(id, 1);
+                    });
+                });
+                
+                document.querySelectorAll('.remove-item').forEach(button => {
+                    button.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const id = this.getAttribute('data-id');
+                        removeItem(id);
+                        removeToast.show();
+                    });
+                });
+            }
+            
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    const card = this.closest('.product-card');
+                    const id = card.getAttribute('data-id');
+                    const name = card.getAttribute('data-name');
+                    const price = parseInt(card.getAttribute('data-price'));
+                    
+                    const existingItem = cart.find(item => item.id === id);
+                    
+                    if (existingItem) {
+                        existingItem.quantity += 1;
+                    } else {
+                        cart.push({
+                            id,
+                            name,
+                            price,
+                            quantity: 1
+                        });
+                    }
+                    
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    updateCartCount();
+                    updateCartDropdown();
+                    addToast.show();
+                });
+            });
+            
+            function updateQuantity(id, change) {
+                const item = cart.find(item => item.id === id);
+                if (item) {
+                    item.quantity += change;
+                    
+                    if (item.quantity <= 0) {
+                        cart = cart.filter(item => item.id !== id);
+                        removeToast.show();
+                    }
+                    
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    updateCartCount();
+                    updateCartDropdown();
+                }
+            }
+            
+            function removeItem(id) {
+                cart = cart.filter(item => item.id !== id);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();
+                updateCartDropdown();
+            }
+            
+            document.querySelector('.close-cart')?.addEventListener('click', function() {
+                cartDropdown?.hide();
+            });
+            
+            document.getElementById('checkout-btn')?.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (cart.length === 0) {
+                    alert('Your cart is empty!');
+                } else {
+                    alert('Proceeding to checkout!');
+                }
+            });
+            
+            document.getElementById('mobileCheckoutBtn')?.addEventListener('click', function() {
+                if (cart.length === 0) {
+                    alert('Your cart is empty!');
+                } else {
+                    alert('Proceeding to checkout!');
+                }
+            });
+            
+            document.getElementById('mobileCartButton')?.addEventListener('click', function() {
+                updateCartDropdown();
+                cartModal.show();
+            });
+            
+            updateCartCount();
+            updateCartDropdown();
+        });
+    </script>
+</body>
+
+</html>
